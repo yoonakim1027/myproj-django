@@ -1,8 +1,13 @@
-from django.contrib import admin
-from django.urls import path
 from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from shop.views import ReviewViewSet
+
+
+app_name = "shop"
+
+router = DefaultRouter()
+router.register("reviews", ReviewViewSet)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('shop/', include("shop.urls")),
+    path("api/", include(router.urls)),
 ]
