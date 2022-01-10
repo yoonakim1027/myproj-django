@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'shop',
     'corsheaders',
     'rest_framework',
+    'blog',
 ]
 
 MIDDLEWARE = [
