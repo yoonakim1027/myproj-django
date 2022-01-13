@@ -8,6 +8,7 @@ urlpatterns = [
     path('shop/', include("shop.urls")),
     path('blog/', include("blog.urls")),
     path('news/', include("news.urls")),
+    path('typing/, include("typing')
 ]
 
 

@@ -1,22 +1,14 @@
-import json
+from django.core.validators import MinLengthValidator, RegexValidator
 from django.db import models
-from django.http import HttpResponse
-from rest_framework.viewsets import ModelViewSet
 
 
-class TimestampedModel(models.Model):
+class Article(models.Model):
+    title = models.CharField(max_length=100, db_index=True,
+                             validators=[
+                                 MinLengthValidator(3, message="최소 3글자 이상 입력해주세요."),
+                                 RegexValidator(r"[ㄱ-힣]", message="한글을 입력해주세요."),
+                             ])
+    content = models.TextField()
+    photo = models.ImageField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        abstract = True
-
-
-class Article(TimestampedModel):
-    title = models.CharField(max_length=200, db_index=True)
-    content = models.TextField()
-    photo = models.ImageField(blank=True)  # 옵션 형태
-
-
-# django에서 이미지를 쓰려면 pillow 가 필수!
-
