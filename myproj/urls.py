@@ -1,3 +1,4 @@
+
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -8,7 +9,7 @@ urlpatterns = [
     path('shop/', include("shop.urls")),
     path('blog/', include("blog.urls")),
     path('news/', include("news.urls")),
-    path('typing/, include("typing')
+    path('youtubemusic/', include("youtubemusic.urls")),
 ]
 
 
