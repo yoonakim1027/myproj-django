@@ -1,3 +1,9 @@
 from django.contrib import admin
 
-# Register your models here.
+from youtubemusic.models import Music
+
+
+@admin.register(Music)
+class MusicAdmin(admin.ModelAdmin):
+    list_display = ["id", 'title']
+    search_fields = ['title']
