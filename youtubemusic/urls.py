@@ -9,5 +9,4 @@ router.register("music", views.MusicViewSet)
 
 urlpatterns = [
     path("api/", include(router.urls)),
-
 ]

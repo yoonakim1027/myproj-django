@@ -11,10 +11,11 @@ class TimestampedModel(models.Model):
 
 
 class Music(TimestampedModel):
-    title = models.CharField(max_length=100, db_index=True,
-                             validators=[
-                                 MinLengthValidator(1, message="최소 한 글자 이상 입력해주세요.")
-                             ])
+    title = models.CharField(
+        max_length=100,
+        db_index=True,
+        validators=[MinLengthValidator(1, message="최소 한 글자 이상 입력해주세요.")],
+    )
     singer = models.TextField()
     content = models.TextField()
     album_photo = models.ImageField()
@@ -22,7 +23,11 @@ class Music(TimestampedModel):
     mood = models.CharField(
         max_length=7,
         choices=[
-            ("hiphop", "힙할 때"), ("sad", "우울할 때"), ("fun", "신났을 때"), ("run", "운동할 때"), ("groove", "분위기 좋은 와인바에서"),
+            ("hiphop", "힙할 때"),
+            ("sad", "우울할 때"),
+            ("fun", "신났을 때"),
+            ("run", "운동할 때"),
+            ("groove", "분위기 좋은 와인바에서"),
             ("study", "집중할 때"),
         ],
         default="hiphop",
@@ -37,16 +42,22 @@ class Music(TimestampedModel):
 
 class User(TimestampedModel):
 
-    name = models.CharField(max_length=100, db_index=True,
-                            validators=[
-                                MinLengthValidator(1, message="최소 한 글자 이상 입력해주세요")
-                            ])
+    name = models.CharField(
+        max_length=100,
+        db_index=True,
+        validators=[MinLengthValidator(1, message="최소 한 글자 이상 입력해주세요")],
+    )
     choice_mood = models.CharField(
         max_length=7,
         choices=[
-            ("hiphop", "힙할 때"), ("sad", "우울할 때"), ("fun", "신났을 때"), ("run", "운동할 때"), ("groove", "분위기 좋은 와인바에서"),
+            ("hiphop", "힙할 때"),
+            ("sad", "우울할 때"),
+            ("fun", "신났을 때"),
+            ("run", "운동할 때"),
+            ("groove", "분위기 좋은 와인바에서"),
             ("study", "집중할 때"),
-        ],default="hiphop",
+        ],
+        default="hiphop",
     )
 
     class Meta:
@@ -54,5 +65,3 @@ class User(TimestampedModel):
 
         verbose_name = "사용자"  # 단수
         verbose_name_plural = "사용자 목록"  # 복수
-
-

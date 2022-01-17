@@ -6,13 +6,24 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('youtubemusic', '0003_auto_20220113_2138'),
+        ("youtubemusic", "0003_auto_20220113_2138"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='user',
-            name='choice_mood',
-            field=models.CharField(choices=[('hiphop', '힙할 때'), ('sad', '우울할 때'), ('fun', '신났을 때'), ('run', '운동할 때'), ('groove', '분위기 좋은 와인바에서'), ('study', '집중할 때')], default='hiphop', max_length=6),
+            model_name="user",
+            name="choice_mood",
+            field=models.CharField(
+                choices=[
+                    ("hiphop", "힙할 때"),
+                    ("sad", "우울할 때"),
+                    ("fun", "신났을 때"),
+                    ("run", "운동할 때"),
+                    ("groove", "분위기 좋은 와인바에서"),
+                    ("study", "집중할 때"),
+                ],
+                default="hiphop",
+                max_length=6,
+            ),
         ),
     ]

@@ -6,26 +6,56 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('youtubemusic', '0004_alter_user_choice_mood'),
+        ("youtubemusic", "0004_alter_user_choice_mood"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='music',
-            options={'ordering': ['-id'], 'verbose_name': '음악', 'verbose_name_plural': '음악 목록'},
+            name="music",
+            options={
+                "ordering": ["-id"],
+                "verbose_name": "음악",
+                "verbose_name_plural": "음악 목록",
+            },
         ),
         migrations.AlterModelOptions(
-            name='user',
-            options={'ordering': ['-id'], 'verbose_name': '사용자', 'verbose_name_plural': '사용자 목록'},
+            name="user",
+            options={
+                "ordering": ["-id"],
+                "verbose_name": "사용자",
+                "verbose_name_plural": "사용자 목록",
+            },
         ),
         migrations.AlterField(
-            model_name='music',
-            name='mood',
-            field=models.CharField(choices=[('hiphop', '힙할 때'), ('sad', '우울할 때'), ('fun', '신났을 때'), ('run', '운동할 때'), ('groove', '분위기 좋은 와인바에서'), ('study', '집중할 때')], default='hiphop', max_length=7),
+            model_name="music",
+            name="mood",
+            field=models.CharField(
+                choices=[
+                    ("hiphop", "힙할 때"),
+                    ("sad", "우울할 때"),
+                    ("fun", "신났을 때"),
+                    ("run", "운동할 때"),
+                    ("groove", "분위기 좋은 와인바에서"),
+                    ("study", "집중할 때"),
+                ],
+                default="hiphop",
+                max_length=7,
+            ),
         ),
         migrations.AlterField(
-            model_name='user',
-            name='choice_mood',
-            field=models.CharField(choices=[('hiphop', '힙할 때'), ('sad', '우울할 때'), ('fun', '신났을 때'), ('run', '운동할 때'), ('groove', '분위기 좋은 와인바에서'), ('study', '집중할 때')], default='hiphop', max_length=7),
+            model_name="user",
+            name="choice_mood",
+            field=models.CharField(
+                choices=[
+                    ("hiphop", "힙할 때"),
+                    ("sad", "우울할 때"),
+                    ("fun", "신났을 때"),
+                    ("run", "운동할 때"),
+                    ("groove", "분위기 좋은 와인바에서"),
+                    ("study", "집중할 때"),
+                ],
+                default="hiphop",
+                max_length=7,
+            ),
         ),
     ]

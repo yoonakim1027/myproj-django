@@ -5,6 +5,8 @@ from rest_framework.viewsets import ModelViewSet
 from news.models import Article
 from news.serializers import ArticleSerializer
 from rest_framework.generics import ListAPIView
+from rest_framework.permissions import AllowAny, IsAuthenticated
+# IsAuthenticated : 유저가 누군지는 상관없고, 인증만 되면 이 API를 호출
 # from news.serializers import ArticleAnonymousSerializer, ArticleAdminSerializer, ArticleGoldMembershipSerializer
 
 
@@ -12,11 +14,16 @@ class ArticleViewSet(ModelViewSet):
     # 한번 고정! 바뀌지 않는 고정부분
     # 클래스 부분 변수 : 클래스 변수는 클래스가 정의될 때 한번 셋팅 (정적인 셋팅)
     queryset = Article.objects.all()  # 설정의 영역
-    # serializer_class = ArticleSerializer
+    serializer_class = ArticleSerializer
+    permission_classes = [IsAuthenticated]
+
+    # permission_classes = [AllowAny] # DRF 디폴트 설정
+    # 별도의 요청이 없어도 ~
 
 
-    def get_serializer_class(self):
-        return ArticleSerializer
+    #
+    # def get_serializer_class(self):
+    #     return ArticleSerializer
 
     #     # 보여지는 데이터를 결정하는 것은 view가 아니라
     #     # serializer임!
@@ -37,6 +44,7 @@ class ArticleViewSet(ModelViewSet):
     #         qs = qs.filter(created_at__year=year)
     #         # 각각 지원되는 __데이터 타입이 다르다~
     #     return qs
+
 
 # article_list = ListAPIView.as_view(
 #     queryset=Article.objects.all(),

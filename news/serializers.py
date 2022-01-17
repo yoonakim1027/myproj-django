@@ -16,6 +16,7 @@ class ArticleSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("한글을 써주세요!!")
         return title
 
+
 # 차별화를 둬서 각각 권한마다 보여지는 것을 다르게!
 # # 비로그인 사용자용
 # class ArticleAnonymousSerializer(serializers.ModelSerializer):

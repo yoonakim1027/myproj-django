@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('youtubemusic', '0001_initial'),
+        ("youtubemusic", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='music',
-            name='singer',
+            model_name="music",
+            name="singer",
             field=models.TextField(default=1),
             preserve_default=False,
         ),

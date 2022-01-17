@@ -9,7 +9,6 @@ class MusicSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-
 # 차별화를 둬서 각각 권한마다 보여지는 것을 다르게!
 # # 비로그인 사용자용
 # class ArticleAnonymousSerializer(serializers.ModelSerializer):

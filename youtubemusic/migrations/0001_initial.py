@@ -8,22 +8,40 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Music',
+            name="Music",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('title', models.CharField(db_index=True, max_length=100, validators=[django.core.validators.MinLengthValidator(1, message='최소 한 글자 이상 입력해주세요.')])),
-                ('content', models.TextField()),
-                ('photo', models.ImageField(upload_to='')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                (
+                    "title",
+                    models.CharField(
+                        db_index=True,
+                        max_length=100,
+                        validators=[
+                            django.core.validators.MinLengthValidator(
+                                1, message="최소 한 글자 이상 입력해주세요."
+                            )
+                        ],
+                    ),
+                ),
+                ("content", models.TextField()),
+                ("photo", models.ImageField(upload_to="")),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
     ]

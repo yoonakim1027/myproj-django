@@ -14,6 +14,8 @@ class PostViewSet(ModelViewSet):
 
     def get_serializer_class(self):
         return PostSerializer
+
+
 #
 # def post_list(request):
 #     qs = Post.objects.all()
