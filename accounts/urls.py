@@ -1,10 +1,6 @@
 # 아래 token view는 accounts앱 내에 두는 것이 맞습니다! 곧 옮길 것
 from django.urls import path
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-)
-
+from accounts.views import TokenObtainPairView, TokenRefreshView
 
 app_name = "accounts"
 
