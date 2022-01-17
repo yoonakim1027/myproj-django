@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "blog",
     "news",
     "youtubemusic",
+    "accounts",
 ]
 
 MIDDLEWARE = [
