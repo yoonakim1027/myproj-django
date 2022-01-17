@@ -22,5 +22,5 @@ class MusicViewSet(ModelViewSet):
 
         query = self.request.query_params.get("query","")
         if query:
-            qs = qs.filter(title__icontains=query)
+            qs = qs.filter(singer__icontains=query)
         return qs
