@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.core.validators import MinLengthValidator, RegexValidator
 from django.db import models
 
@@ -15,3 +16,4 @@ class Article(models.Model):
     photo = models.ImageField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
