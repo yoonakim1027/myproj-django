@@ -23,9 +23,12 @@ class UserCreationSerializer(serializers.ModelSerializer):
         model = User
         fields = ["username", "password", "password2"]
 
+
+
     # 모든 유효성 검사도 가져오는 것
 
     # 위에서 받은 password, password2가 같은 지 유효성 검사가 필요
+    # 두 개 이상의 필드에 대해 유효성 검사를 할 때 validate를 사용
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
             raise serializers.ValidationError("동일한 암호를 지정해주세요.")
