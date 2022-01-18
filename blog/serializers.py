@@ -6,7 +6,6 @@ from blog.models import Post
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 import re
-from news.models import Article
 
 
 class AuthorSerializer(serializers.ModelSerializer):
@@ -19,5 +18,5 @@ class PostSerializer(serializers.ModelSerializer):
     author = AuthorSerializer(read_only=True)
 
     class Meta:
-        model = Article
+        model = Post
         fields = ["id", "title", "content", "photo", "author"]
