@@ -3,8 +3,21 @@ from blog.models import Post
 
 
 # DRF의 serializers 사용
-class PostSerializer(serializers.ModelSerializer):
+from django.contrib.auth import get_user_model
+from rest_framework import serializers
+import re
+from news.models import Article
+
+
+class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Post
-        fields = "__all__"  # 실제 서비스에서는 모든 필드가 노출되는 __all__는 비추
-        # serializer는 데이터베이스에 대한 유효성 검사, 디비 저장을 함
+        model = get_user_model()
+        fields = ["username", "first_name", "last_name"]
+
+
+class PostSerializer(serializers.ModelSerializer):
+    author = AuthorSerializer(read_only=True)
+
+    class Meta:
+        model = Article
+        fields = ["id", "title", "content", "photo", "author"]

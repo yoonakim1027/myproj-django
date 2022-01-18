@@ -6,7 +6,7 @@ from rest_framework_simplejwt.serializers import (
     # 두개가 부모.
 )
 
-
+# serializers의 유효성 검사는 validate
 class TokenObtainPairSerializer(OrigTokenObtainPairSerializer):
     # access/ refresh 속성 외에 추가 속성 !
     def validate(self, attrs):

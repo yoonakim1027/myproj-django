@@ -1,4 +1,6 @@
 import json
+
+from django.conf import settings
 from django.core.validators import MinLengthValidator, RegexValidator
 from django.core.validators import MaxValueValidator
 from django.db import models
@@ -25,3 +27,4 @@ class Post(TimestampedModel):
     )
     content = models.TextField()
     photo = models.ImageField(blank=True)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
