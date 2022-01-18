@@ -1,3 +1,4 @@
+from rest_framework import viewsets
 from rest_framework.viewsets import ModelViewSet
 from news.models import Article
 from news.serializers import ArticleSerializer
@@ -9,19 +10,23 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 
 
 # list, detail, create, update, delete를 1개 ViewSet에서 지원
-
-class ArticleViewSet(ModelViewSet):
-    # 한번 고정! 바뀌지 않는 고정부분
-    # 클래스 부분 변수 : 클래스 변수는 클래스가 정의될 때 한번 셋팅 (정적인 셋팅)
-    queryset = Article.objects.all()  # 설정의 영역
+class ArticleViewSet(viewsets.ModelViewSet):
+    queryset = Article.objects.all()
     serializer_class = ArticleSerializer
+    # permission_classes = [AllowAny]  # DRF 디폴트 설정
+    # permission_classes = [IsAuthenticated]
+    # 위 주석 한줄과 아래는 같은 결과
 
-    def get_permissions(self):  # 여기가 함수 정의부
-        # 항상 django 내에서의 method비교는 대문자!!
-
-#항상 인증 헤더가 있어야 한다~
+    def get_permissions(self):
         # if self.request.method in ("POST", "PUT", "PATCH", "DELETE"):
         if self.request.method == "GET":
-            return [IsAuthenticated()]
-        return [AllowAny()]
-    # permission_classes = [IsAuthenticated]
+            # 각각을 언제 쓰느냐를 잘 봐
+            return [AllowAny()]
+        return [IsAuthenticated()]
+
+    # 유효성 검사가 끝나고 나서
+    # 실제  serializer.save()를 할 때 수행되는 함수
+    def perform_create(self, serializer):
+        # serializer.save는 commit=False를 지원하지 않음
+        # 대신 키워드 인자를 통한 속성 지정을 지원함
+        serializer.save(author=self.request.user)
