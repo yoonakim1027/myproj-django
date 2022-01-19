@@ -11,22 +11,42 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from datetime import timedelta
+from environ import Env  # 환경변수를 쉽게 변환
 
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+env = Env()
+
+dot_env_path = BASE_DIR / ".env"
+if dot_env_path.exists():
+    with dot_env_path.open(encoding="utf-8") as f:
+        env.read_env(f, overwrite=True)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-%gsm__k!@&qya&khpg#8c*&p!d-vydsb=m#&45mza&ed3vm@5t"
+# 이 시크릿 키는? 매번 바뀔 수 있음
+# 시크릿키는 암호화가 필요할 때 필요!
+# 암호화(예를들어 패스워드) 할때, 이를 활용해서 암호화
+# 단순 문자열인 SECRET_KEY는 변환이 필요가 없음~
+SECRET_KEY = env.str("SECRET_KEY", default="---- SECRET KEY ----")
+# 이렇게 하면? 이 이름의 환경변수를 문자열로 읽어서 대입해주게 됨
+# 숫자라고 하면 env.int / 리스트면 env.list ~
+# 환경변수가 없다면? 장고는 서버 구동이 안되고, 이 시점에서 키 에러가 난다.
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# 이거는 True면 안돼 ~!
+# 로컬에서 개발할때는 True / 운영할때는 False
+DEBUG = env.bool('DEBUG', default=False)
+# 서버에서 운영할때 DEBUG 옵션을 빼먹을 수도 있음
+# 그렇더라도 기본으로는 False로 들어가야 함
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
 
 # Application definition
 
@@ -84,10 +104,17 @@ WSGI_APPLICATION = "myproj.wsgi.application"
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    # "default": {
+    #     "ENGINE": "django.db.backends.sqlite3",
+    #     "NAME": BASE_DIR / "db.sqlite3",
+    #     #1줄의 환경변수로 셋팅! 장고가 제공~
+    #
+    # }
+
+    # sqlite 파일경로를 db경로에 쓰고~ 이를 f스트링 문법으로 적용
+    'default': env.db(default=f'sqlite:///{BASE_DIR / "db.sqlite3"}'),
+    # 이 자체가 DATABASE_URL 환경변수를 파싱하여 dict 객체를 생성해준다!
+
 }
 
 # Password validation
@@ -129,7 +156,6 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 STATIC_URL = "/static/"
 
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -138,11 +164,21 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # django-cors-headers
 # https://github.com/adamchainz/django-cors-headers
 
-CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
+CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS",
+                                default=['http://localhost:3000'])
+
 
 # djangorestframework
 
 # 인증을 지원하는 방법으로서 뭘쓸거야 ? Session방법이랑 authentication방법을 쓸거야
+
+# 환경변수 설정 (DAYs니까 숫자! )-> env.int로 정수형으로 바꿔야 함
+# 운영하다가도 정책이 바뀔 수 있음
+ACCESS_TOKEN_LIFETIME_DAYS = env.int("ACCESS_TOKEN_LIFETIME_DAYS", default=0)
+ACCESS_TOKEN_LIFETIME_HOURS = env.int("ACCESS_TOKEN_LIFETIME_HOURS", default=0)
+ACCESS_TOKEN_LIFETIME_MINUTES = env.int("ACCESS_TOKEN_LIFETIME_MINUTES", default=5)
+
+
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
@@ -152,9 +188,14 @@ REST_FRAMEWORK = {
     ],
 
     # 원래 디폴트 만료 시간: 5분
-    # 이렇게 위에 import한다음에 이렇게쓰면 ?
+    # 이렇게 위에 import 한 다음에 이렇게쓰면 ?
     # 새로 생성되는 토큰의 만료시간은 7일 뒤 !!
-    'ACCESS_TOKEN_LIFETIME' : timedelta(days=7)
+    'ACCESS_TOKEN_LIFETIME': timedelta(
+        days=ACCESS_TOKEN_LIFETIME_DAYS,
+        hours=ACCESS_TOKEN_LIFETIME_HOURS,
+        minutes=ACCESS_TOKEN_LIFETIME_MINUTES,
+
+
+    )
 
 }
-
