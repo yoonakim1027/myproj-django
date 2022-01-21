@@ -155,6 +155,10 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 STATIC_URL = "/static/"
+# 각 앱에 나눠서 저장된 static 파일들을 한 곳으로 저장할 디렉토리 경로
+# 배포시에만 의미있는 설정
+# 한 곳으로 모으는 명령 : python manage.py collectstatic
+STATIC_ROOT = BASE_DIR / 'static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -167,7 +171,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS",
                                 default=['http://localhost:3000'])
 
-
 # djangorestframework
 
 # 인증을 지원하는 방법으로서 뭘쓸거야 ? Session방법이랑 authentication방법을 쓸거야
@@ -177,8 +180,6 @@ CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS",
 ACCESS_TOKEN_LIFETIME_DAYS = env.int("ACCESS_TOKEN_LIFETIME_DAYS", default=0)
 ACCESS_TOKEN_LIFETIME_HOURS = env.int("ACCESS_TOKEN_LIFETIME_HOURS", default=0)
 ACCESS_TOKEN_LIFETIME_MINUTES = env.int("ACCESS_TOKEN_LIFETIME_MINUTES", default=5)
-
-
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
@@ -194,7 +195,6 @@ REST_FRAMEWORK = {
         days=ACCESS_TOKEN_LIFETIME_DAYS,
         hours=ACCESS_TOKEN_LIFETIME_HOURS,
         minutes=ACCESS_TOKEN_LIFETIME_MINUTES,
-
 
     )
 
